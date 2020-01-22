@@ -176,3 +176,16 @@
 (defun notes (num-l)
   (mapcar #'(lambda (k) (first (rassoc k (dotlist *note-table*)))) num-l))
 
+(defun raise (n num-l)
+  (mapcar #'(lambda (element)
+              (+ n element)) num-l))
+
+(defun normalize (num-l)
+  (mapcar #'(lambda (element) (cond
+                           ((> element 12) (- element 12))
+                           ((< element 1) (+ element 12))
+                           (t element)))
+          num-l))
+
+(defun transpose (n note-l)
+  (notes  (normalize (raise n (numbers note-l)))  ))
