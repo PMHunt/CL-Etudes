@@ -171,7 +171,7 @@
   (mapcar #'(lambda (entry) (first  (last (assoc entry *note-table*)))) note-l ))
 
 (defun dotlist (lst)
-  (mapcar #'(lambda (element) (cons (car element) (car (cdr element)))) lst))
+  (mapcar #'(lambda (element) (cons (car element) (car (cdr element)))) lst)) ; converts table to dot.pair to enable rassoc
 
 (defun notes (num-l)
   (mapcar #'(lambda (k) (first (rassoc k (dotlist *note-table*)))) num-l))
