@@ -189,3 +189,16 @@
 
 (defun transpose (n note-l)
   (notes  (normalize (raise n (numbers note-l)))  ))
+
+(defun two-to-four (lst)4
+       (remove-if-not #'(lambda (x) (< 1 x 5)) lst))
+
+(defun count-term (term lst)
+  (length (remove-if-not #'(lambda (elt) (equal elt term)) lst)))
+
+(defun list-len-two (lst)
+  (remove-if-not #'(lambda (elt) (= (length elt) 2)) lst) )
+
+(defun my-intersection (lst1 lst2)
+  (remove-if-not #'(lambda (elt) (member elt lst1)) lst2))
+
