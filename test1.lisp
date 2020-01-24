@@ -202,3 +202,51 @@
 (defun my-intersection (lst1 lst2)
   (remove-if-not #'(lambda (elt) (member elt lst1)) lst2))
 
+(defun rank (card)
+  (first card))
+
+(defun suit (card)
+  (first (last card)))
+
+(defvar *my-hand* '((3 hearts)
+                    (5 clubs)
+                    (2 diamonds)
+                    (4 diamonds)
+                    (ace spades)))
+
+(defun count-suit (k hand)
+  (length (remove-if-not #'(lambda (e) (equal (suit e) k)) hand)))
+
+(defvar *colors* '((clubs black)
+                   (diamonds red)
+                   (spades black)
+                   (hearts red)))
+(defun color-of (card)
+  (first (last (assoc (suit card) *colors*))))
+
+(defun first-red (hand)
+  (car (remove-if-not #'(lambda (card) (equal 'red (color-of card)) ) hand)))
+
+(defun black-cards (hand)
+  (remove-if-not #'(lambda (card) (equal 'black (color-of card)) ) hand))
+
+(defun all-kind (k hand)
+  (remove-if-not #'(lambda (card) (equal (suit card) k )) hand))
+
+(defun what-ranks (k hand)
+  (mapcar #'(lambda (card) (first card)) (all-kind k hand) ) )
+
+(defvar *all-ranks* '(2 3 4 5 6 7 8 9 10 jack queen king ace))
+
+(defun higher-rank-p (x y)
+  (member x (member y *all-ranks*)))
+
+(defun rank-list (hand)
+  (mapcar #'(lambda (e) (rank e)) hand))
+
+
+(defun high-rank (hand)
+  (find-if #'(lambda (rk) (member rk (rank-list hand))) (reverse *all-ranks*)) ) 
+
+(defun high-card (hand)
+  (assoc (high-rank hand) hand))
