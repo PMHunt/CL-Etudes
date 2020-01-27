@@ -324,3 +324,20 @@
 (defun supp-cube (b)
   (remove-if-not #'(lambda (a) (is-cube-p a)) (supporters b))) ; FIXME
 
+(defun desc1 (b)
+  (fetch (list b '? '?)))
+
+(defun desc-list (b)
+  (mapcar #'(lambda (e) (cdr e) ) (desc1 b) ))
+
+(defun description (b)
+  (apply #'append (desc-list b)))
+
+(defvar *words* '((one un)
+                  (two deux)
+                  (three trois)
+                  (four quatre)
+                  (five cinq)))
+
+(defun add-lang (d l)
+  (mapcar #'(lambda (e f) (append e (list f))) d l)) ; uses two parameter version of mapcar to add a new lang l to a lexicon d
