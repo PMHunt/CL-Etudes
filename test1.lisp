@@ -244,9 +244,83 @@
 (defun rank-list (hand)
   (mapcar #'(lambda (e) (rank e)) hand))
 
-
 (defun high-rank (hand)
   (find-if #'(lambda (rk) (member rk (rank-list hand))) (reverse *all-ranks*)) ) 
 
 (defun high-card (hand)
   (assoc (high-rank hand) hand))
+
+;; do high-card again with higher-rank-p and reduce
+
+(defun length-of-lists (l)
+  (length (reduce #'append l)))
+
+(defun all-odd (list-of-numbers)
+  "return t if all list-of-numbers members are odd numbers"
+  (every #'oddp list-of-numbers))
+
+(defun all-not-odd (list-of-numbers)
+  "return t if none of list-of-numbers members are odd numbers"
+  (every #'(lambda (n) (not (oddp n))) list-of-numbers))
+
+(defun not-all-odd (list-of-numbers)
+  (and (some #'oddp list-of-numbers)  (some #'evenp list-of-numbers) ) )
+
+(defvar *blockdb* '((b1 shape brick)
+                    (b1 color green)
+                    (b1 size small)
+                    (b1 supported-by b2)
+                    (b1 supported-by b3)
+                    (b2 shape brick)
+                    (b2 color red)
+                    (b2 size small)
+                    (b2 supports b1)
+                    (b2 left-of b3)
+                    (b3 shape brick)
+                    (b3 color red)
+                    (b3 size small)
+                    (b3 supports b1)
+                    (b3 right-of b2)
+                    (b4 shape pyramid)
+                    (b4 color blue)
+                    (b4 size large)
+                    (b4 supported-by b5)
+                    (b5 shape cube)
+                    (b5 color green)
+                    (b5 size large)
+                    (b5 supports b4)
+                    (b6 shape brick)
+                    (b6 color purple)
+                    (b6 size large)))
+
+(defun factorial (n)
+  (if (= n 1)
+      1
+      (* n (factorial (- n 1)))))
+
+(defun match-element (x y)
+  (cond
+    ((equal x y) t)
+    ((equal y '?) t)
+    (t nil)))
+
+(defun match-triple (a p)
+  (and (match-element (first a) (first p))
+       (match-element (second a) (second p))
+       (match-element (first (last a)) (first (last p)))))
+
+(defun fetch (p)
+  (remove-if-not #'(lambda (e) (match-triple e p)) *blockdb* ))
+
+(defun color-pattern (x)
+  (list  x 'color '?) )
+
+(defun supporters (b)
+  (mapcar #'caddr (fetch (list b 'supported-by '?))))
+
+(defun is-cube-p (b)
+  (equal 'cube (caddar (fetch (list b 'shape '?)))))
+
+(defun supp-cube (b)
+  (remove-if-not #'(lambda (a) (is-cube-p a)) (supporters b))) ; FIXME
+
