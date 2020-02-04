@@ -41,7 +41,6 @@
   (if (eql state 'debugging) 'sleeping 
       (first (rest (member state *nerdstates*)))))
 
-
 (defun sleepless-nerdus (state)
   (if (eql state 'debugging) 'eating 
       (first (rest (member state *nerdstates*)))))
@@ -331,7 +330,7 @@
   (mapcar #'(lambda (e) (cdr e) ) (desc1 b) ))
 
 (defun description (b)
-  (apply #'append (desc-list b)))
+  (apply #'append (desc-list b))) ; above external functions don't behave like lexical closures e.g #'append here
 
 (defvar *words* '((one un)
                   (two deux)
@@ -340,4 +339,72 @@
                   (five cinq)))
 
 (defun add-lang (d l)
-  (mapcar #'(lambda (e f) (append e (list f))) d l)) ; uses two parameter version of mapcar to add a new lang l to a lexicon d
+  (mapcar #'(lambda (e f) (append e (list f))) d l)) ; uses two parameter version of mapcar to add a new lang l/ to a lexicon d
+
+(defun inalienable-rights (fn)
+  (funcall fn '(life liberty and the pursuit of happiness))) ; funcall demo, contrast with apply
+
+(defun today ()
+  (let ((today-l (list (decode-universal-time (get-universal-time)))))
+    (car today-l)))
+
+(defun any-odd-p (x)
+  (cond((null x) nil)
+       ((oddp (first x)) t)
+       (t (any-odd-p (rest x)))))
+
+(defun if-any-odd-p (x)
+  (if (null x)
+      nil
+      (if (oddp (first x)) t
+          (if-any-odd-p (rest x)))))
+
+(defun laugh (x)
+  (cond ((equal 0 x) nil)
+        (t  (cons 'ha (laugh (- x 1))))))
+
+(defun addup (l)
+  (cond ((null l) 0 )
+        (t (+ (car l) (addup (cdr l))))))
+
+
+(defun collatz (n)
+  (cond ((equal n 1) t)
+        ((evenp n) (c (/ n 2)))
+        (t (c (+ (* 3 n) 1)))))
+
+(defun fib (n)
+  (cond
+    ((equal n 1) 1)
+    ((equal n 0) 0)
+    (t (+ (fib (- n 1)) (fib (- n 2))))))
+
+(defun range (max &key (min 0) (step 1))
+  (loop for n from min below max by step
+     collect n))
+
+(defun fib-series (n)
+  (mapcar #'fib (range n)))
+
+(defun any-7-p (l)
+  (cond
+    ((equal 7 (first l)) t )
+    ((equal nil (first l)) nil)
+    (t (any-7-p (rest l)))))
+
+(defun fact (n)
+  (cond ((< n 0) nil)
+        ((equal n 0)  1)
+        (t (* n (fact (- n 1))))))
+
+(defun find-first-odd (l)
+  (cond
+    ((null l) nil)
+    ((oddp (first l)) (first l))
+    (t (find-first-odd (rest l)))))
+
+(defun last-element (l)
+  (cond
+    ((null (second l)) (first l))
+    (t (last-element (rest l)))))
+
