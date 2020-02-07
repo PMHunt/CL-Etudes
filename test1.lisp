@@ -421,3 +421,31 @@
   (cond
     ((< (length l) 2) t)
     (t (and (equal (first l) (second l)) (all-equal (rest l))))))
+
+
+;; N - Cons a - Cons b
+;; -------------------
+;; 5 - 'Ha - (laugh 4)
+;; 4 - 'Ha - (Laugh 3)
+;; 3 - 'Ha - (laugh 2)
+;; 2 - 'Ha - (laugh 1)
+;; 1 - 'Ha - Nil
+
+(defun countdown (n)
+  (cond ((zerop n) nil)
+        (t (cons n (countdown (- n 1))))))
+
+(defun fact-app (n)
+  (reduce #'* (countdown n)))
+
+(defun countdown-0 (n)
+  (defun countdown-inner (n)
+    (cond ((zerop n) nil)
+          (t (cons n (countdown-inner (- n 1))))))
+  (append (countdown-inner n) '(0)))
+
+(defun square-list (l)
+  ;; LATER - can we generalise this? How does mapcar actually work?
+  (cond ((null l) nil)
+        (t (cons (* (car l) (car l)) (square-list (cdr l)) ))))
+
