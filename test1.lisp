@@ -449,3 +449,25 @@
   (cond ((null l) nil)
         (t (cons (* (car l) (car l)) (square-list (cdr l)) ))))
 
+(defun my-nth (n l)
+  (cond
+    ((< n 0) nil)
+    ((= n 0) (car l))
+    (t (my-nth (- n 1) (cdr l)))))
+
+(defun my-member (x l)
+  (cond
+    ((equal (car l) x) l)
+    (t (my-member x (cdr l)))))
+
+(defun my-assoc (x al)
+  (cond
+    ((eql x (car (car al))) (car al))
+    (t (my-assoc x (cdr al)))))
+
+(defun compare-lengths (l m)
+  (cond
+    ((and (null (cdr l)) (null (cdr m))) 'same-length)
+    ((null (cdr l)) 'second-is-longer)
+    ((null (cdr m)) 'first-is-longer)
+    (t (compare-lengths (cdr l) (cdr m)))))
