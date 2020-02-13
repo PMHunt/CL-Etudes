@@ -461,6 +461,7 @@
     (t (my-member x (cdr l)))))
 
 (defun my-assoc (x al)
+  ;; pairlis was useful for making dotpairs
   (cond
     ((eql x (car (car al))) (car al))
     (t (my-assoc x (cdr al)))))
@@ -471,3 +472,51 @@
     ((null (cdr l)) 'second-is-longer)
     ((null (cdr m)) 'first-is-longer)
     (t (compare-lengths (cdr l) (cdr m)))))
+
+
+(defun sum-numeric-elements (l)
+  (defun find-numeric-elements (l)
+    (cond
+      ((null l) nil)
+      ((numberp (car l)) (cons (car l) (find-numeric-elements (cdr l))))
+      (t (find-numeric-elements (cdr l)))))
+  (reduce #'+ (find-numeric-elements l)))
+
+(defun my-remove (x l)
+  (cond
+    ((null l) nil)
+    ((not (eql x (car l))) (cons (car l) (my-remove x (cdr l))))
+    (t (my-remove x (cdr l)))))
+
+(defvar list1 '(1 1 2 3 4 a b c))
+
+(defvar list2 '(1 4 5 b c d))
+
+(defun my-member (x l)
+  (cond ((null l) nil)
+        ((eql x (car l)) (cons (car l) (my-member x (cdr l))))
+        (t (my-member x (cdr l)))))
+
+(defun my-intersection (l m)
+  (cond
+    ((null l) nil)
+    ((my-member (car l) m) (cons (car l) (my-intersection (cdr l) m)))
+    (t (my-intersection (cdr l) m))))
+
+
+(defun my-set-difference (l m)
+  ;; book agrees but fails on 4 for (my-set-difference '(1 2 2 3) '(2 2 4))
+  ;; FIXME
+  (cond
+    ((null l) nil)
+    ((not (member (car l) m)) (cons (car l) (my-set-difference (cdr l) m)))
+    (t (my-set-difference (cdr l) m))))
+
+(defun list-odd-CR (l)
+  (cond
+    ((null l) nil)
+    ((oddp (car l)) (cons (car l) (list-odd-CR (cdr l)) ))
+    (t (list-odd-CR (cdr l)))))
+
+(defun count-odd-CR (l)
+  (length (list-odd-CR l)) )
