@@ -520,3 +520,13 @@
 
 (defun count-odd-CR (l)
   (length (list-odd-CR l)) )
+
+(defun combine (x y)
+  (+ x y))
+
+(defun comb-fib (n)
+  "Made this version to be able to dtrace the 'combine' function"
+  (cond
+    ((equal n 1) 1)
+    ((equal n 0) 0)
+    (t (combine (comb-fib (- n 1)) (comb-fib (- n 2))))))
