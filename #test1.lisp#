@@ -537,3 +537,10 @@
     ((atom the-list) 'Q)
     (t (cons (atoms-to-q (first the-list))
              (atoms-to-q (rest the-list))))))
+
+
+(defun count-atoms (the-list)
+  (if (atom the-list)
+      1
+      (+ (count-atoms (first the-list))
+         (count-atoms (rest the-list)))()))
