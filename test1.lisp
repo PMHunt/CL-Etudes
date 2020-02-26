@@ -560,3 +560,11 @@
     (t (combine
         (sum-tree (first the-tree))
         (sum-tree (rest the-tree))))))  
+
+
+(defun my-subst (s-to s-from the-tree)
+  (cond
+    ((eql s-from the-tree) s-to)
+    ((atom the-tree) the-tree)
+    (t (cons (my-subst s-to s-from (first the-tree))
+             (my-subst s-to s-from (rest the-tree))))))
