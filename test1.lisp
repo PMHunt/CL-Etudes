@@ -551,3 +551,12 @@
     (t (+ 1
           (count-cons (first the-tree))
           (count-cons (rest the-tree))))))
+
+
+(defun sum-tree (the-tree)
+  (cond
+    ((numberp the-tree) the-tree)
+    ((atom the-tree) 0)
+    (t (combine
+        (sum-tree (first the-tree))
+        (sum-tree (rest the-tree))))))  
