@@ -568,3 +568,20 @@
     ((atom the-tree) the-tree)
     (t (cons (my-subst s-to s-from (first the-tree))
              (my-subst s-to s-from (rest the-tree))))))
+
+
+(defun flatten-with-append (the-tree)
+  "O(n2) conces for n cells, so this is kind of a shit way to do it"
+  (cond
+    ((null the-tree) nil)
+    ((atom the-tree) (list the-tree))
+    (t (append (flatten-with-append (first the-tree))
+               (flatten-with-append (rest the-tree))))))
+
+(defun flatten-with-acc (the-tree &optional acc)
+  "Better way using an accumulator. PAIP p329"
+  (cond
+    ((null the-tree) acc)
+    ((atom the-tree) (cons the-tree acc))
+    (t (flatten-with-acc (first the-tree)
+                         (flatten-with-acc (rest the-tree) acc)))))
