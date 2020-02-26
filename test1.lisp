@@ -531,9 +531,23 @@
     ((equal n 0) 0)
     (t (combine (comb-fib (- n 1)) (comb-fib (- n 2))))))
 
-(defun atoms-to-q (the-list)
+(defun atoms-to-q (the-tree)
   (cond
-    ((null the-list) nil)
-    ((atom the-list) 'Q)
-    (t (cons (atoms-to-q (first the-list))
-             (atoms-to-q (rest the-list))))))
+    ((null the-tree) nil)
+    ((atom the-tree) 'Q)
+    (t (cons (atoms-to-q (first the-tree))
+             (atoms-to-q (rest the-tree))))))
+
+
+(defun count-atoms (the-tree)
+  (if (atom the-tree)
+      1
+      (+ (count-atoms (first the-tree))
+         (count-atoms (rest the-tree)))))
+
+(defun count-cons (the-tree)
+  (cond
+    ((atom the-tree) 0)
+    (t (+ 1
+          (count-cons (first the-tree))
+          (count-cons (rest the-tree))))))
