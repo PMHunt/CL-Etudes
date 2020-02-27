@@ -571,7 +571,7 @@
 
 
 (defun flatten-with-append (the-tree)
-  "O(n2) conces for n cells, so this is kind of a shit way to do it"
+  "O(n2) conses for n cells, so this is kind of a shit way to do it"
   (cond
     ((null the-tree) nil)
     ((atom the-tree) (list the-tree))
@@ -585,3 +585,12 @@
     ((atom the-tree) (cons the-tree acc))
     (t (flatten-with-acc (first the-tree)
                          (flatten-with-acc (rest the-tree) acc)))))
+
+(defun tree-depth (the-tree)
+  "Return the maximum depth of a tree"
+  (cond
+    ((atom the-tree) 0)
+    (t (+ 1 (max 
+             (tree-depth (first the-tree))
+             (tree-depth (rest the-tree)))))))
+
