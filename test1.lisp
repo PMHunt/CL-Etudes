@@ -594,3 +594,12 @@
              (tree-depth (first the-tree))
              (tree-depth (rest the-tree)))))))
 
+
+(defun paren-depth (the-tree)
+  "Return the maximum depth of parameters"
+  (cond
+    ((atom the-tree) 0)
+    (t (max
+        (1+ (paren-depth (first the-tree)))
+        (paren-depth (rest the-tree))))))
+
