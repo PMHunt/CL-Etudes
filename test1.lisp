@@ -603,3 +603,27 @@
         (1+ (paren-depth (first the-tree)))
         (paren-depth (rest the-tree))))))
 
+(defun count-back-recur (n)
+  "Count-up without a helper function"
+  (if (< n 1)
+      nil
+      (append (count-back-recur (- n 1)) (list n))))
+
+(defun make-loaf (n)
+  "Make a list of X's"
+  (if (< n 1)
+      nil
+      (append (make-loaf (- n 1)) (list 'X))))
+
+(defun add-brackets (x n)
+  "Add n brackets to x"
+  (if (< n 1)
+      x
+      (list (add-brackets x (- n 1)))))
+
+(defun pairings (l m)
+  "Make pairs out of the elements two equal sized lists"
+  (if
+   (null (first l))
+   nil
+   (cons (list (first m) (first l))  (pairings (rest l) (rest m)) ) ))
