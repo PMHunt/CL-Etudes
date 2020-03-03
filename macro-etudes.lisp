@@ -29,3 +29,8 @@ and the 'never' condition terminates the loop with T. This is our test for prime
   (format t "~d " p))
 
 ;; Which gives us a starting point for (defmacro do-primes ..
+
+(defmacro do-primes ((var start end) &body body)
+  `(do ((,var (next-prime ,start) (next-prime (+ ,var 1))))
+       ((> ,var ,end))
+     ,@body))
