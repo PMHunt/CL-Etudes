@@ -688,3 +688,18 @@
   (remove person
           (mapcar #'first
                   (remove-if-not #'(lambda (x) (intersection (parents person)(parents (first x)))) *family*))))
+
+(defun mappend (fn the-list)
+  "Apply a fn to each item in the list then append resulting items"
+  (apply #'append (mapcar fn the-list)))
+
+
+(defun mapunion (f l)
+  "remove duplicates so it's a union of the sets"
+  (remove-duplicates (mappend f l)))
+
+(defun grandparents (person)
+  (mapunion #'parents (parents person)))
+
+(defun cousins (person)
+  (   ))

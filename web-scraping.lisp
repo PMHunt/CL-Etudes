@@ -1,21 +1,5 @@
 (ql:quickload '(:dexador :plump :lquery :lparallel))
 
-;; libraries required for lisp cookbook recepies
-
-(defun sleep-random ()
-  "Sleep 1-2 seconds"
-  (sleep (+ 1 (/ (random 1000) 1000))))
-
-
-(defmacro with-url ((doc url) &body body)
-  "Execute `body' with `url' as a plump document bound to `doc'"
-  `(let ((,doc (plump:parse (dex:get ,url))))
-     ,@body))
-
-;; Example
-(with-url (doc "https://www.google.com")
-  (format t "#title text: ~A" (plump:text (clss:select "#title" doc))))
-
 ;; based on commonlisp cookbook site
 
 (plump:parse "<foo><bar this is=\"a thing\">baz</bar><span id=\"test\">oh my")
