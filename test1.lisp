@@ -670,21 +670,67 @@
   "name father mother")
 
 (defun father (person)
+  "person -> person 
+finds the father of a person if known, else nil"
   (second (assoc person *family*)))
 
 (defun mother (person)
+  "person -> person 
+finds the mother of a person if known, else nil"
   (third (assoc person *family*)))
 
 (defun parents (person)
+  "person -> (persons) 
+finds the mother and father of a person if known, else nil"
   (remove nil (rest (assoc person *family*))))
 
 (defun children (person)
+  "person -> (persons) 
+finds the children of a person if known, else nil"
   (if (null person)
       nil
       (mapcar #'first
               (remove-if-not #'(lambda (x) (or (equal person (second x)) (equal person (third x)))) *family*))))
 
 (defun siblings (person)
+  "person -> (persons) 
+finds the brothers and sisters of a person if known, else nil"
   (remove person
           (mapcar #'first
                   (remove-if-not #'(lambda (x) (intersection (parents person)(parents (first x)))) *family*))))
+
+(defun mappend (fn the-list)
+  "function, list -> list
+Apply a fn to each item in the list then append resulting items"
+  (apply #'append (mapcar fn the-list)))
+
+(defun mapunion (f l)
+  "function, list -> list
+remove duplicates so it's a union of the sets"
+  (remove-duplicates (mappend f l)))
+
+(defun grandparents (person)
+  "person -> (persons)
+finds the grandparents of a person if known, else ni"
+  (mapunion #'parents (parents person)))
+
+(defun grandchildren (person)
+  "person -> (persons
+Needed for cousins"
+  (mapunion #'children (children person)))
+
+(defun distant-cousins (person)
+  "person -> (persons)
+finds the cousins of a person if known, else nil.
+Defined by having grandparents in common"
+  (mappend #'grandchildren (grandparents person)))
+
+(defun aunts-uncles (person)
+  "person -> (person)
+Person's parents siblings"
+  (mapunion #'siblings (parents person)))
+
+(defun first-cousins (person)
+  "person -> (persons)
+Children persons parents siblings"
+  (mapunion #'children (aunts-uncles person)))
