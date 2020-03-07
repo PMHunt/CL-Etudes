@@ -19,7 +19,6 @@
 (defun right-side (sent)
   (rest (member '-vs- sent)))
 
-
 (defun left-side (sent)
   (reverse  (rest (member '-vs- (reverse sent)))))
 
@@ -38,11 +37,11 @@
 (defparameter *nerdstates* '(sleeping eating waiting-for-a-computer programming debugging))
 
 (defun nerdus (state)
-  (if (eql state 'debugging) 'sleeping
+  (if (eql state 'debugging) 'sleeping 
       (first (rest (member state *nerdstates*)))))
 
 (defun sleepless-nerdus (state)
-  (if (eql state 'debugging) 'eating
+  (if (eql state 'debugging) 'eating 
       (first (rest (member state *nerdstates*)))))
 
 (defun swap-first-with-last (sent)
@@ -61,10 +60,10 @@
      (south dining-room)
      (east kitchen))
 
-    (upstairs-bedroom   (west library)
+    (upstairs-bedroom   (west library) 
      (south front-stairs))
 
-    (dining-room        (north living-room)
+    (dining-room        (north living-room) 
      (east pantry)
      (west downstairs-bedroom))
 
@@ -244,7 +243,7 @@
   (mapcar #'(lambda (e) (rank e)) hand))
 
 (defun high-rank (hand)
-  (find-if #'(lambda (rk) (member rk (rank-list hand))) (reverse *all-ranks*)) )
+  (find-if #'(lambda (rk) (member rk (rank-list hand))) (reverse *all-ranks*)) ) 
 
 (defun high-card (hand)
   (assoc (high-rank hand) hand))
@@ -394,7 +393,7 @@
     (t (any-7-p (rest l)))))
 
 (defun fact (n)
-  ;; fact needs to unwind the stack from * n,
+  ;; fact needs to unwind the stack from * n, 
   (cond ((< n 0) nil)
         ((equal n 0) 1)
         (t (* n (fact (- n 1))))))
@@ -559,7 +558,7 @@
     ((atom the-tree) 0)
     (t (combine
         (sum-tree (first the-tree))
-        (sum-tree (rest the-tree))))))
+        (sum-tree (rest the-tree))))))  
 
 
 (defun my-subst (s-to s-from the-tree)
@@ -590,7 +589,7 @@
   "Return the maximum depth of a tree"
   (cond
     ((atom the-tree) 0)
-    (t (+ 1 (max
+    (t (+ 1 (max 
              (tree-depth (first the-tree))
              (tree-depth (rest the-tree)))))))
 
@@ -633,7 +632,7 @@
   (cond ((zerop n) (break "N is zero"))
         (t (* n (fact (- n 1))))))
 
-;; 8.60 Keyboard exercise
+;; 8.60 Keyboard exercise 
 
 (defvar *family*
   '((colin nil nil)
@@ -670,22 +669,22 @@
   "name father mother")
 
 (defun father (person)
-  "person -> person
+  "person -> person 
 finds the father of a person if known, else nil"
   (second (assoc person *family*)))
 
 (defun mother (person)
-  "person -> person
+  "person -> person 
 finds the mother of a person if known, else nil"
   (third (assoc person *family*)))
 
 (defun parents (person)
-  "person -> (persons)
+  "person -> (persons) 
 finds the mother and father of a person if known, else nil"
   (remove nil (rest (assoc person *family*))))
 
 (defun children (person)
-  "person -> (persons)
+  "person -> (persons) 
 finds the children of a person if known, else nil"
   (if (null person)
       nil
@@ -693,7 +692,7 @@ finds the children of a person if known, else nil"
               (remove-if-not #'(lambda (x) (or (equal person (second x)) (equal person (third x)))) *family*))))
 
 (defun siblings (person)
-  "person -> (persons)
+  "person -> (persons) 
 finds the brothers and sisters of a person if known, else nil"
   (remove person
           (mapcar #'first
@@ -734,4 +733,3 @@ Person's parents siblings"
   "person -> (persons)
 Children persons parents siblings"
   (mapunion #'children (aunts-uncles person)))
-

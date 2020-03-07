@@ -1,2 +1,2 @@
-# CL-Etudes
+# cl-studies
 Common Lisp practice exercises
