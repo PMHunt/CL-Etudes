@@ -735,3 +735,11 @@ Person's parents siblings"
 Children persons parents siblings"
   (mapunion #'children (aunts-uncles person)))
 
+(defun descended-from-p (x y)
+  "person person -> boolean
+  returns true if first person descended from second
+  (descended-from-p 'tamara 'arthur) -> true"
+  (cond
+    ((null x) nil)
+    ((member y (parents x)) t)
+    (t (or (descended-from-p (mother x) y) (descended-from-p (father x) y)))))
