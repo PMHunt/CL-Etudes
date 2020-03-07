@@ -743,3 +743,11 @@ Children persons parents siblings"
     ((null x) nil)
     ((member y (parents x)) t)
     (t (or (descended-from-p (mother x) y) (descended-from-p (father x) y)))))
+
+(defun ancestors (person)
+  "person -> (persons)
+  person's ancestors are their parents, parents parents, etc until tree runs out
+  (ancestors 'marie) -> (ellen arthur kate george frank linda)  "
+  (cond
+    ((null (parents person)) nil)
+    (t (append (parents person) (mapunion #'ancestors (parents person))))))
