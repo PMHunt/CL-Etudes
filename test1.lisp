@@ -751,3 +751,21 @@ Children persons parents siblings"
   (cond
     ((null (parents person)) nil)
     (t (append (parents person) (mapunion #'ancestors (parents person))))))
+
+(defun generation-gap-helper (person predecessor n)
+"person person number -> number
+if we run out of ancestors, nil
+if we match, n
+recursivel see if person's mother or father is the predecessor"
+  (cond
+    ((null person) nil)
+    ((equal person predecessor) n)
+    (t (or
+        (generation-gap-helper (father person) predecessor (+ 1 n))
+        (generation-gap-helper (mother person) predecessor (+ 1 n))))))
+
+(defun generation-gap (person predecessor)
+  "person person -> number
+count generations between person and ancestors
+suzanne colin -> 1, fredrick colin -> 3, fredrick linda -> nil "
+  (generation-gap-helper person predecessor 0))
