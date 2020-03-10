@@ -769,3 +769,30 @@ recursivel see if person's mother or father is the predecessor"
 count generations between person and ancestors
 suzanne colin -> 1, fredrick colin -> 3, fredrick linda -> nil "
   (generation-gap-helper person predecessor 0))
+
+;; FIXME -  fed up with recursion for now, so leaving advanced stuff to later
+
+;;; New topic - IO
+
+(defun print-old-bold ()
+  (format t "~&There are old pilots")
+  (format t "~&and there are bold pilots")
+  (format t "~&but no old, bold pilots"))
+
+(defun draw-line (n)
+  " number -> nil
+ side-effect is a line of n asterisks"
+  (if (= n 0)
+      (format t "~&")
+      (progn
+        (format t "*")
+        (draw-line (- n 1)))))
+
+(defun draw-box (x y)
+  "Number number -> nil + side-effect
+Draw a box of specified dimensions using *'s"
+  (if (= y 0)
+      (format t "~&")
+      (progn
+        (draw-line x)
+        (draw-box x (- y 1)))))
