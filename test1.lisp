@@ -796,3 +796,14 @@ Draw a box of specified dimensions using *'s"
       (progn
         (draw-line x)
         (draw-box x (- y 1)))))
+
+(defun 99-bottles (n)
+  (if (= n 0)
+      (format t "~& shit!")
+      (progn
+        (format t "~& ~S bottles of beer on the wall" n)
+        (format t "~& ~S bottles of beer" n)
+        (format t "~& take one down")
+        (format t "~& pass it around")
+        (format t "~& ~S bottles of beer on the wall ~%~%" (- n 1))
+        (99-bottles (- n 1)))))
