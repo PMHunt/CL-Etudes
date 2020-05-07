@@ -811,9 +811,11 @@ Draw a box of specified dimensions using *'s"
 (defun print-board (board-list)
   "Take a list of X O and nil representing game state and print the board"
   (if (= (length board-list) 0)
+      ; if all elements of the content list have been printed, return
       (format t "~&")
+      ; using progn because we want side effects, printing to stdio
       (progn
-        ; print the elements of the cell
+        ; print the elements of the cell before we print cell contents
         (cond
           ((or (= (length board-list) 3)
                (= (length board-list) 6)) (format t "~& ------------- ~&"))
