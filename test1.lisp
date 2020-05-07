@@ -793,7 +793,7 @@ suzanne colin -> 1, fredrick colin -> 3, fredrick linda -> nil "
 Draw a box of specified dimensions using *'s"
   (if (= y 0)
       (format t "~&")
-      (progn
+  ""    (progn
         (draw-line x)
         (draw-box x (- y 1)))))
 
@@ -807,3 +807,21 @@ Draw a box of specified dimensions using *'s"
         (format t "~& pass it around")
         (format t "~& ~S bottles of beer on the wall ~%~%" (- n 1))
         (99-bottles (- n 1)))))
+
+(defun print-board (board-list)
+  "Take a list of X O and nil representing game state and print the board"
+  (if (= (length board-list) 0)
+      (format t "~&")
+      (progn
+        ; print the elements of the cell
+        (cond
+          ((or (= (length board-list) 3)
+               (= (length board-list) 6)) (format t "~& ------------- ~&"))
+          ((not (or (= (length board-list) 0)
+                    (= (length board-list) 9))) (format t " | ")))
+        ; then print the contents of the cell
+        (if (null (first board-list))
+            (format t "   ")
+            (format t " ~S " (first board-list)))
+        ; recurse through  the contents list
+        (print-board (rest board-list)))))
