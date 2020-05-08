@@ -827,3 +827,24 @@ Draw a box of specified dimensions using *'s"
             (format t " ~S " (first board-list)))
         ; recurse through  the contents list
         (print-board (rest board-list)))))
+
+(defun print-pay ()
+  "Compute gross pay based on user input of hourly rate and hours worked "
+  (format t "Please supply hourly rate: ")
+  (let ((rate (read)))
+    (format t "Rate is ~S dollars/hour ~%" rate)
+    (format t "Please supply hours worked: ")
+    (let ((worked (read)))
+      (format t "Worked ~S hours ~%" worked)
+      (format t "Gross pay is ~S dollars" (* worked rate)))))
+
+(defun cookie-monster ()
+  "read user input until symbol COOKIE is recieved"
+  (format t "Give me cookie ")
+  (let ((user-input (read)))
+    (format t "Cookie? ~S ~%" user-input)
+    (if (equal user-input 'cookie)
+        (format t "Thank you, munch, munch")
+        (progn
+          (format t "Ugh, no want ~S ~%" user-input)
+          (cookie-monster)))))
