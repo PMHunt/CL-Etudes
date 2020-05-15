@@ -848,3 +848,70 @@ Draw a box of specified dimensions using *'s"
         (progn
           (format t "Ugh, no want ~S ~%" user-input)
           (cookie-monster)))))
+
+
+(defun space-over (n)
+  (if (= n 0)
+      (format t "")
+      (progn
+        (format t " ")
+        (space-over (- n 1)))))
+
+(defun test-so (n)
+  (format t "~%>>>")
+  (space-over n)
+  (format t "<<<"))
+
+(defun plot-one-point (plotting-string y-value)
+  (space-over y-value)
+  (format t "~S~%" plotting-string))
+
+(defun plot-points (plotting-string point-list)
+  (if (not (null point-list))
+      (progn
+        (plot-one-point plotting-string (first point-list))
+        (plot-points plotting-string (rest point-list)))))
+
+(defun generate (m n)
+  (if (< m n)
+      (if (equal m n)
+          (list m)
+          (cons m (generate (+ m 1) n)))
+      ; so it doesn't break when < n m
+      (if (equal m n)
+          (list n)
+          (cons n (generate (+ n 1) m)))))
+
+(defun make-graph (func start end plotting-string)
+ ; (plot-points plotting-string (mapcar func (generate start end))))
+
+(defparameter gleet-club '((John Smith) (Barbara Ann) (Muhammed Ali)))
+
+(defun print-one-name (name)
+    (format t "~&~10S ~S"
+            (second name)
+            (first name)))
+
+(defun print-all-names (name-list)
+    (mapcar #'print-one-name name-list)
+    'done)
+
+
+
+(setf *friends* nil)
+(setf *popularity* 0)
+
+(defun meet (person)
+    (cond ((equal person (first *friends*))
+           'we-just-met)
+          ((member person *friends*)
+           'we-know-each-other)
+          (t (push person *friends*)
+             (incf *popularity* 1)
+             (format t "popularity ~S ~%" *popularity*)
+             (list 'pleased-to-meet-you person))))
+
+(defun forget (person)
+    (cond ((not (member person *friends*))
+           (format t "Not a member"))
+          (t (remove person *friends*))))
