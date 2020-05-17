@@ -849,7 +849,6 @@ Draw a box of specified dimensions using *'s"
           (format t "Ugh, no want ~S ~%" user-input)
           (cookie-monster)))))
 
-
 (defun space-over (n)
   (if (= n 0)
       (format t "")
@@ -883,7 +882,7 @@ Draw a box of specified dimensions using *'s"
           (cons n (generate (+ n 1) m)))))
 
 (defun make-graph (func start end plotting-string)
- ; (plot-points plotting-string (mapcar func (generate start end))))
+(plot-points plotting-string (mapcar func (generate start end))))
 
 (defparameter gleet-club '((John Smith) (Barbara Ann) (Muhammed Ali)))
 
@@ -915,3 +914,5 @@ Draw a box of specified dimensions using *'s"
     (cond ((not (member person *friends*))
            (format t "Not a member"))
           (t (remove person *friends*))))
+
+(defun )
