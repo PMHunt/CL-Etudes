@@ -31,11 +31,11 @@
   (setf (nth pos board) player)
   board)
 
-(setf *computer* 10)
-(setf *opponent* 1)
+(defparameter *computer* 10)
+(defparameter *opponent* 1)
 
 ; need to represent possible winning moves: rows, columns, diagonals
-(setf *triplets*
+(defparameter *triplets*
       '((1 2 3) (4 5 6) (7 8 9)
         (1 4 7) (2 5 8) (3 6 9)
         (1 5 9) (3 5 7)))
@@ -51,7 +51,7 @@
           *triplets* ))
 
 (defun winner-p (board)
-  "compute the triples and look for 3 of the same symbol"
+  "compute the triples and look for 3 of the same symbol"q
   (let ((sums (compute-sums board)))
     (or (member (* 3 *computer*) sums)
         (member (* 3 *opponent*) sums))))
@@ -104,7 +104,10 @@
           (t (opponent-move new-board)))))
 
 (defun choose-best-move (board)
-  (random-move-strategy board))
+  (or
+   (make-three-in-a-row board)
+   (block-opponent-win board)
+   (random-move-strategy board)))
 
 (defun random-move-strategy (board)
   (list (pick-random-empty-position board)
@@ -115,3 +118,26 @@
     (if (zerop (nth pos board))
         pos
         (pick-random-empty-position board))))
+
+(defun make-three-in-a-row (board)
+  "returns nil if there's no 3 in a row opportunity"
+  (let ((pos (win-or-block board (* 2 *computer*))))
+    (and pos (list pos "make three in a row"))))
+
+(defun block-opponent-win (board)
+  (let ((pos (win-or-block board (* 2 *opponent*))))
+    (and pos (list pos "block opponent"))))
+
+(defun win-or-block (board target-sum)
+"detect opportunity to win or block and return that pos"
+  (let ((triplet (find-if
+                  #'(lambda (trip)
+                      (equal (sum-triplet board trip) target-sum))
+                  *triplets*)))
+    (when triplet
+      (find-empty-position board triplet))))
+
+(defun find-empty-position (board squares)
+  (find-if #'(lambda (pos)
+               (zerop (nth pos board)))
+           squares))
