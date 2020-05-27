@@ -31,6 +31,7 @@
   (setf (nth pos board) player)
   board)
 
+; represent X and O numerically so we can use arithmetic tests easily
 (defparameter *computer* 10)
 (defparameter *opponent* 1)
 
@@ -41,6 +42,7 @@
         (1 5 9) (3 5 7)))
 
 (defun sum-triplet (board triplet)
+  "With the above parameters, we can detect game states by summing a triplet"
   (+ (nth (first triplet) board)
      (nth (second triplet) board)
      (nth (third triplet) board)))
@@ -94,8 +96,8 @@
          (pos (first best-move))
          (strategy (second best-move))
          (new-board (make-move *computer* pos board)))
-    (format t "~&My move: ~S" pos)
-    (format t "~&My strategy: ~A~%" strategy)
+    (format t "~&Computer move: ~S" pos)
+    (format t "~&Computer strategy: ~A~%" strategy)
     (print-board new-board)
     (cond ((winner-p new-board)
            (format t "~&I win!"))
@@ -138,6 +140,7 @@
       (find-empty-position board triplet))))
 
 (defun find-empty-position (board squares)
+  "given a triplet 'squares' find empty cell"
   (find-if #'(lambda (pos)
                (zerop (nth pos board)))
            squares))
