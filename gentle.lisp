@@ -280,6 +280,7 @@
                     (b3 size small)
                     (b3 supports b1)
                     (b3 right-of b2)
+                    *blackdb*
                     (b4 shape pyramid)
                     (b4 color blue)
                     (b4 size large)

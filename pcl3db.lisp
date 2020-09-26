@@ -1,4 +1,3 @@
-
 (defvar *db* nil)
 
 (defun make-cd (title artist rating ripped)
@@ -16,7 +15,7 @@
   (read-line *query-io*))
 
 (defun prompt-for-cd ()
-  "user interaction gets info and feeds it to make-cd"
+  "user interaction gets cd properties and feeds them into make-cd"
   (make-cd
    (prompt-read "Title")
    (prompt-read "Artist")
@@ -29,7 +28,7 @@
      (if (not (y-or-n-p "Another? [y/n]: ")) (return))))
 
 (defun save-db (filename)
-  (with-open-file (out filename 
+  (with-open-file (out filename
                        :direction :output
                        :if-exists :supersede)
     (with-standard-io-syntax
@@ -65,12 +64,13 @@
   (loop while fields
      collecting (make-comparison-expr (pop fields) (pop fields))))
 
+
 (defmacro where (&rest clauses)
   `#'(lambda (cd) (and ,@(make-comparison-list clauses))))
 
 (defun update (selector-fn &key title artist rating (ripped nil ripped-p))
   (setf *db*
-        (mapcar 
+        (mapcar
          #'(lambda (row)
              (when ((funcall) selector-fn row)
                (if title    (setf (getf row :title) title))
