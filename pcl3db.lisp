@@ -48,7 +48,7 @@
    *db*))
 
 (defun select (selector-fn)
-  "This version abstracts the details of the query"
+  "Returns *db* rows that match selector-fn"
   (remove-if-not selector-fn *db*))
 
 (defun artist-selector (artist)
@@ -62,8 +62,16 @@
 
 (defun make-comparison-list (fields)
   (loop while fields
-     collecting (make-comparison-expr (pop fields) (pop fields))))
+        collecting (make-comparison-expr (pop fields) (pop fields))))
 
+;; Original version of where function
+;(defun where (&key title artist rating (ripped nil ripped-p))
+;  #'(lambda (cd)
+;      (and
+;       (if title    (equal (getf cd :title)  title)  t)
+;       (if artist   (equal (getf cd :artist) artist) t)
+;       (if rating   (equal (getf cd :rating) rating) t)
+;       (if ripped-p (equal (getf cd :ripped) ripped) t))))
 
 (defmacro where (&rest clauses)
   `#'(lambda (cd) (and ,@(make-comparison-list clauses))))
