@@ -916,4 +916,10 @@ Draw a box of specified dimensions using *'s"
            (format t "Not a member"))
           (t (remove person *friends*))))
 
-(defun )
+;; 10.5
+
+(defun less-ugly (x y)
+  (let* ((max (if (> x y) x y))
+        (avg (/ (+ x y) 2.0))
+        (pct (* 100 (/ avg max))))
+    (format t "Average ~a is ~a percent of ~a " avg pct max)))
