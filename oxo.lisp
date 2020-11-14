@@ -53,7 +53,7 @@
           *triplets* ))
 
 (defun winner-p (board)
-  "compute the triples and look for 3 of the same symbol"q
+  "compute the triples and look for 3 of the same symbol"
   (let ((sums (compute-sums board)))
     (or (member (* 3 *computer*) sums)
         (member (* 3 *opponent*) sums))))
@@ -140,7 +140,13 @@
       (find-empty-position board triplet))))
 
 (defun find-empty-position (board squares)
-  "given a triplet 'squares' find empty cell"
+  "given a list 'squares' find empty cell, this would be better picking random"
   (find-if #'(lambda (pos)
                (zerop (nth pos board)))
            squares))
+
+;; ex 10.8 - extend strategies to defend squeeze play and two-on-one
+
+(defparameter *corners* '(1 3 7 9))
+
+(defparameter *sides* '(2 4 6 8))

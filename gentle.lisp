@@ -929,6 +929,8 @@ Draw a box of specified dimensions using *'s"
          (result
            (cond ((> commission 100) 'rich)
                  ((< commission 100) 'poor))))
-    (break "Value of RESULT is ~S" result)
+    (break "Value of RESULT is ~S and COMMISSION ~S" result commission)
     (format t "~&I predict you will be: ~S" result)
 result))
+
+;; 10.8 - see oxo.lisp
